@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/fix_no"
             android:padding="15dp"
-            android:digits="123"
+            android:digits="1234"
             android:inputType="number"
             android:maxLength="1"
             android:imeOptions="actionDone"
@@ -60,7 +61,7 @@
             android:id="@+id/user1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="5dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/user1"
@@ -69,7 +70,7 @@
             android:id="@+id/user2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="5dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user1"
             android:text="@string/user2"
@@ -78,7 +79,7 @@
             android:id="@+id/user3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="5dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user2"
             android:text="@string/user3"
@@ -86,6 +87,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/laypointname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -135,5 +137,47 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/laypointname">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="20dp"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bird00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bird : 00"
+                android:onClick="birddialog"/>
+            <Button
+                android:id="@+id/bird25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bird : 25"
+                android:onClick="birddialog"/>
+            <Button
+                android:id="@+id/bird40"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bird : 40"
+                android:onClick="birddialog"/>
+            <Button
+                android:id="@+id/bird45"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bird : 45"
+                android:onClick="birddialog"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
