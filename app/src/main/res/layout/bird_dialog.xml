@@ -19,19 +19,23 @@
             android:id="@+id/edittime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Time"
+            android:hint="@string/time"
             android:padding="15dp"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
+            android:inputType="time"
             />
         <EditText
             android:id="@+id/editazbe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Azimuth Bearing"
+            android:hint="@string/azimuth_bearing"
             android:padding="15dp"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="3"
+
             />
         <RadioGroup
             android:layout_width="match_parent"

@@ -112,7 +112,27 @@ public class MainActivity extends AppCompatActivity {
 
     //bird dialog onclick
     public void birddialog(View view) {
+
+        //editfield decelerations
+        datetxt = findViewById(R.id.datetxt);
+        lattxt = findViewById(R.id.latitude);
+        longtxt = findViewById(R.id.longitude);
+        fixnotxt = findViewById(R.id.fix_no);
+
+        //empty field check
+        if(observerstr != null)
+            observerstr = observerstr.trim();
+        if(datetxt.getText().toString().equals("")
+                || fixnotxt.getText().toString().equals("")
+                || observerstr == null
+                || observerstr.equals(""))
+        {
+            Toast.makeText(view.getContext(),"please fill the empty fields", Toast.LENGTH_SHORT).show();
+            return ;
+        }
+
         BirdDialog birdialog = new BirdDialog();
+
         //bundle to send values from activity to dialog
         Bundle bundle = new Bundle();
         switch(view.getId())
@@ -120,15 +140,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.bird00:
                 bundle.putString("title", "bird : 00");
                 break;
-
             case R.id.bird25:
                 bundle.putString("title", "bird : 25");
                 break;
-
             case R.id.bird40:
                 bundle.putString("title", "bird : 40");
                 break;
-
             case R.id.bird45:
                 bundle.putString("title", "bird : 45");
                 break;
@@ -173,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("observer", observerstr);
 
         //date transfer
-        datetxt = findViewById(R.id.datetxt);
         if(datetxt.getText().equals("")){}
         else
         {
@@ -182,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //lat transfer
-        lattxt = findViewById(R.id.latitude);
         if(lattxt.getText() == null){}
         else
         {
@@ -192,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //long transfer
-        longtxt = findViewById(R.id.longitude);
         if(longtxt.getText() == null){}
         else
         {
@@ -201,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //fix no transfer
-        fixnotxt = findViewById(R.id.fix_no);
         if(fixnotxt.getText() == null){}
         else
         {

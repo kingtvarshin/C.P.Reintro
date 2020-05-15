@@ -1,7 +1,9 @@
 package com.example.cpreintro;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BirdDialog extends AppCompatDialogFragment {
 
@@ -55,6 +69,7 @@ public class BirdDialog extends AppCompatDialogFragment {
                 .setPositiveButton("save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        addItemToSheet();
                         Toast.makeText(view.getContext(),"Selected: " +" save " + title +
                                 observerstr + datestr + latstr+ longstr+fixnostr+locationidstr, Toast.LENGTH_LONG).show();
                     }
@@ -63,5 +78,58 @@ public class BirdDialog extends AppCompatDialogFragment {
 
 
         return builder.create();
+    }
+
+    private void addItemToSheet() {
+
+        final ProgressDialog loading = ProgressDialog.show(getContext(),"saving data","Please wait");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.gs_script),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        loading.dismiss();
+                        Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> parmas = new HashMap<>();
+
+                //here we pass params
+                parmas.put("action","addItem");
+                parmas.put("Observer",observerstr);
+                parmas.put("Date",datestr);
+                parmas.put("Tag_Channel",title);
+                parmas.put("Time",timestr);
+                parmas.put("Latitude",latstr);
+                parmas.put("Longitude",longstr);
+                parmas.put("Azimuth_Bearing",azimuthstr);
+                parmas.put("fix_no",fixnostr);
+                parmas.put("Location_id",locationidstr);
+//                parmas.put("Signal Type",);
+
+                return parmas;
+            }
+        };
+
+        int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
+
+        RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(retryPolicy);
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+
+        queue.add(stringRequest);
+
     }
 }
