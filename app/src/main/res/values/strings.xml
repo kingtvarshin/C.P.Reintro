@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">C.P.Reintro</string>
-    <string name="date">Date : 01/01/2020</string>
+    <string name="date">*Date :</string>
     <string name="user3">Sanjeev Thakur</string>
     <string name="user2">Samakshi tiwari</string>
     <string name="user1">Vikas Thakur</string>
-    <string name="fix_no">Fix no.</string>
+    <string name="fix_no">*Fix no.</string>
     <string name="observer">observer</string>
     <string name="point_name">point name</string>
     <string name="coordinates">Coordinates</string>
     <string name="lat">latitude</string>
     <string name="longitude">longitude</string>
     <string name="submit">Submit</string>
+    <string name="datetxt">14/05/2020</string>
 </resources>

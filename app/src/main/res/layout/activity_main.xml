@@ -25,8 +25,18 @@
             android:text="@string/date"
             />
         <EditText
+            android:id="@+id/datetxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/datetxt"
+            android:padding="15dp"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="datetime"
+            />
+        <EditText
             android:id="@+id/fix_no"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/fix_no"
             android:padding="15dp"
@@ -65,6 +75,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/user1"
+            android:onClick="onSelectedob"
             />
         <CheckBox
             android:id="@+id/user2"
@@ -74,6 +85,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user1"
             android:text="@string/user2"
+            android:onClick="onSelectedob"
             />
         <CheckBox
             android:id="@+id/user3"
@@ -83,6 +95,31 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user2"
             android:text="@string/user3"
+            android:onClick="onSelectedob"
+            />
+        <EditText
+            android:id="@+id/ob1txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="observer 1"
+            android:textSize="14sp"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            />
+        <EditText
+            android:id="@+id/ob2txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="observer2"
+            android:textSize="14sp"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="text"
             />
     </LinearLayout>
 
@@ -100,8 +137,10 @@
             android:id="@+id/point_or_coord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:textOff="@string/point_name"
             android:textOn="@string/coordinates"
+            android:layout_gravity="center"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,13 +152,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:spinnerMode="dropdown"
+                android:padding="12dp"
                 />
             <EditText
                 android:id="@+id/latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/lat"
-                android:padding="15dp"
+                android:padding="12dp"
                 android:inputType="numberDecimal"
                 android:imeOptions="actionDone"
                 android:layout_gravity="center"
@@ -129,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/longitude"
-                android:padding="15dp"
+                android:padding="12dp"
                 android:inputType="numberDecimal"
                 android:imeOptions="actionDone"
                 android:layout_gravity="center"
@@ -179,5 +219,20 @@
 
         </LinearLayout>
     </ScrollView>
+
+<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"-->
+<!--        android:id="@+id/fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end|bottom"-->
+<!--        android:layout_margin="8dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        android:text="@string/submit"-->
+<!--        android:background="@android:color/holo_blue_bright"-->
+<!--        android:textColor="@color/colorPrimaryDark"-->
+<!--        android:textSize="16dp"-->
+<!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
