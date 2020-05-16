@@ -223,8 +223,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //location id tranfer
-//        if(locationidstr.equals("Select a Point name from the List")){Toast.makeText(view.getContext(),"fill all the fields first", Toast.LENGTH_SHORT).show();return;}
+        if(locationidstr == null || locationidstr.equals("Select a Point name from the List"))
+        {
+            locationidstr = "";
+        }
         bundle.putString("locationid", locationidstr);
+
         birdialog.setArguments(bundle);
         birdialog.show(getSupportFragmentManager(),"bird dialog");
     }
@@ -262,21 +266,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-    }
-
-    public void onradiobuttonclicked(View view) {
-
-        Boolean checked = ((RadioButton) view).isChecked();
-        switch (view.getId()) {
-            case R.id.radiond:
-            case R.id.radiows:
-            case R.id.radioss:
-                if (checked) {Toast.makeText(view.getContext(),"Selected: " +((RadioButton) view).getText(), Toast.LENGTH_SHORT).show();
-                } else {
-                }
-                break;
-        }
-
     }
 
     public String observeredittextstr() {

@@ -3,11 +3,11 @@ package com.example.cpreintro;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,19 +27,20 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BirdDialog extends AppCompatDialogFragment {
+public class BirdDialog extends AppCompatDialogFragment implements View.OnClickListener {
 
-    private String title,observerstr, datestr, latstr, longstr, fixnostr, locationidstr, timestr, azimuthstr;
-    private EditText time;
-    private EditText azimuthbe;
+    private String title,observerstr, datestr, latstr, longstr, fixnostr, locationidstr, timestr, azimuthstr,signalstr;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.bird_dialog,null);
+        view.findViewById(R.id.radiond).setOnClickListener(this);
+        view.findViewById(R.id.radiows).setOnClickListener(this);
+        view.findViewById(R.id.radioss).setOnClickListener(this);
 
         if (getArguments() != null) {
             title = getArguments().getString("title","");
@@ -51,12 +52,19 @@ public class BirdDialog extends AppCompatDialogFragment {
             locationidstr = getArguments().getString("locationid","");
         }
 
-        time = view.findViewById(R.id.edittime);
-        azimuthbe = view.findViewById(R.id.editazbe);
+        EditText time = view.findViewById(R.id.edittime);
+        EditText azimuthbe = view.findViewById(R.id.editazbe);
 
         timestr = time.getText().toString();
         azimuthstr = azimuthbe.getText().toString();
 
+        //check for null
+        if(latstr == null)
+            latstr = "";
+        else if(longstr == null)
+            longstr = "";
+        else if(timestr == null)
+            timestr = "";
 
         builder.setView(view)
                 .setTitle(title)
@@ -69,20 +77,37 @@ public class BirdDialog extends AppCompatDialogFragment {
                 .setPositiveButton("save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        addItemToSheet();
-                        Toast.makeText(view.getContext(),"Selected: " +" save " + title +
-                                observerstr + datestr + latstr+ longstr+fixnostr+locationidstr, Toast.LENGTH_LONG).show();
+//                        addItemToSheet();
+                        Toast.makeText(view.getContext(),
+                                " observer: " + observerstr +
+                                " date: " +datestr +
+                                " tag channel: " + title +
+                                " time: " + timestr +
+                                " Latitude: " + latstr +
+                                " longitude: " + longstr +
+                                " azimuth bearing: " + azimuthstr +
+                                " fix_no: " + fixnostr +
+                                " location id: " + locationidstr +
+                                " signal type: " + signalstr, Toast.LENGTH_LONG).show();
+                        System.out.println(" observer: " + observerstr +
+                                " date: " +datestr +
+                                " tag channel: " + title +
+                                " time: " + timestr +
+                                " Latitude: " + latstr +
+                                " longitude: " + longstr +
+                                " azimuth bearing: " + azimuthstr +
+                                " fix_no: " + fixnostr +
+                                " location id: " + locationidstr +
+                                " signal type: " + signalstr);
                     }
                 });
-
-
 
         return builder.create();
     }
 
     private void addItemToSheet() {
 
-        final ProgressDialog loading = ProgressDialog.show(getContext(),"saving data","Please wait");
+        final ProgressDialog loading = ProgressDialog.show(requireActivity(),"saving data","Please wait");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.gs_script),
                 new Response.Listener<String>() {
@@ -97,7 +122,6 @@ public class BirdDialog extends AppCompatDialogFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 }
         ) {
@@ -116,7 +140,7 @@ public class BirdDialog extends AppCompatDialogFragment {
                 parmas.put("Azimuth_Bearing",azimuthstr);
                 parmas.put("fix_no",fixnostr);
                 parmas.put("Location_id",locationidstr);
-//                parmas.put("Signal Type",);
+                parmas.put("Signal_type",signalstr);
 
                 return parmas;
             }
@@ -127,9 +151,32 @@ public class BirdDialog extends AppCompatDialogFragment {
         RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(retryPolicy);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(requireActivity());
 
         queue.add(stringRequest);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        boolean checked;
+        checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.radiond:
+            case R.id.radiows:
+            case R.id.radioss:
+                if (checked)
+                {
+                    signalstr = (String) ((RadioButton) view).getText();
+                    if(signalstr == null)
+                        signalstr = "";
+                    Toast.makeText(view.getContext(),signalstr, Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    signalstr = "";
+                }
+                break;
+        }
     }
 }
