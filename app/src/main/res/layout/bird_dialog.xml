@@ -46,22 +46,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="Not Detected"
-                android:onClick="onradiobuttonclicked"/>
+                android:text="Not Detected"/>
             <RadioButton
                 android:id="@+id/radiows"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="Weak Signal"
-                android:onClick="onradiobuttonclicked"/>
+                android:text="Weak Signal"/>
             <RadioButton
                 android:id="@+id/radioss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="Strong Signal"
-                android:onClick="onradiobuttonclicked"/>
+                android:text="Strong Signal"/>
         </RadioGroup>
 
     </LinearLayout>

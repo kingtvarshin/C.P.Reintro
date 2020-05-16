@@ -27,9 +27,13 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BirdDialog extends AppCompatDialogFragment implements View.OnClickListener {
+public class BirdDialog extends AppCompatDialogFragment {
 
     private String title,observerstr, datestr, latstr, longstr, fixnostr, locationidstr, timestr, azimuthstr,signalstr;
+
+    private EditText time, azimuthbe;
+
+    private RadioButton rdws, rdnd, rdss;
 
     @NonNull
     @Override
@@ -38,9 +42,6 @@ public class BirdDialog extends AppCompatDialogFragment implements View.OnClickL
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.bird_dialog,null);
-        view.findViewById(R.id.radiond).setOnClickListener(this);
-        view.findViewById(R.id.radiows).setOnClickListener(this);
-        view.findViewById(R.id.radioss).setOnClickListener(this);
 
         if (getArguments() != null) {
             title = getArguments().getString("title","");
@@ -52,19 +53,11 @@ public class BirdDialog extends AppCompatDialogFragment implements View.OnClickL
             locationidstr = getArguments().getString("locationid","");
         }
 
-        EditText time = view.findViewById(R.id.edittime);
-        EditText azimuthbe = view.findViewById(R.id.editazbe);
-
-        timestr = time.getText().toString();
-        azimuthstr = azimuthbe.getText().toString();
-
-        //check for null
-        if(latstr == null)
-            latstr = "";
-        else if(longstr == null)
-            longstr = "";
-        else if(timestr == null)
-            timestr = "";
+        time = view.findViewById(R.id.edittime);
+        azimuthbe = view.findViewById(R.id.editazbe);
+        rdnd = view.findViewById(R.id.radiond);
+        rdws = view.findViewById(R.id.radiows);
+        rdss = view.findViewById(R.id.radioss);
 
         builder.setView(view)
                 .setTitle(title)
@@ -77,28 +70,38 @@ public class BirdDialog extends AppCompatDialogFragment implements View.OnClickL
                 .setPositiveButton("save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-//                        addItemToSheet();
+                        timestr = time.getText().toString();
+                        azimuthstr = azimuthbe.getText().toString();
+                        if(rdnd.isChecked())
+                            signalstr = rdnd.getText().toString();
+                        else if(rdws.isChecked())
+                            signalstr = rdws.getText().toString();
+                        else if(rdss.isChecked())
+                            signalstr = rdss.getText().toString();
+
+                        //check for null
+                        if(latstr == null)
+                            latstr = "";
+                        else if(longstr == null)
+                            longstr = "";
+                        else if(timestr == null)
+                            timestr = "";
+
                         Toast.makeText(view.getContext(),
                                 " observer: " + observerstr +
-                                " date: " +datestr +
-                                " tag channel: " + title +
-                                " time: " + timestr +
-                                " Latitude: " + latstr +
-                                " longitude: " + longstr +
-                                " azimuth bearing: " + azimuthstr +
-                                " fix_no: " + fixnostr +
-                                " location id: " + locationidstr +
-                                " signal type: " + signalstr, Toast.LENGTH_LONG).show();
-                        System.out.println(" observer: " + observerstr +
-                                " date: " +datestr +
-                                " tag channel: " + title +
-                                " time: " + timestr +
-                                " Latitude: " + latstr +
-                                " longitude: " + longstr +
-                                " azimuth bearing: " + azimuthstr +
-                                " fix_no: " + fixnostr +
-                                " location id: " + locationidstr +
-                                " signal type: " + signalstr);
+                                        " date: " +datestr +
+                                        " tag channel: " + title +
+                                        " time: " + timestr +
+                                        " Latitude: " + latstr +
+                                        " longitude: " + longstr +
+                                        " azimuth bearing: " + azimuthstr +
+                                        " fix_no: " + fixnostr +
+                                        " location id: " + locationidstr +
+                                        " signal type: " + signalstr,
+                                Toast.LENGTH_LONG).show();
+
+                        addItemToSheet();
+
                     }
                 });
 
@@ -109,14 +112,11 @@ public class BirdDialog extends AppCompatDialogFragment implements View.OnClickL
 
         final ProgressDialog loading = ProgressDialog.show(requireActivity(),"saving data","Please wait");
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.gs_script),
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxVpHvZ1jIjOsfSXfK0VN61JAGienRqXvsx0Mdr8Bs2ddEgyUc/exec",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         loading.dismiss();
-                        Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -155,28 +155,5 @@ public class BirdDialog extends AppCompatDialogFragment implements View.OnClickL
 
         queue.add(stringRequest);
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        boolean checked;
-        checked = ((RadioButton) view).isChecked();
-        switch (view.getId()) {
-            case R.id.radiond:
-            case R.id.radiows:
-            case R.id.radioss:
-                if (checked)
-                {
-                    signalstr = (String) ((RadioButton) view).getText();
-                    if(signalstr == null)
-                        signalstr = "";
-                    Toast.makeText(view.getContext(),signalstr, Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    signalstr = "";
-                }
-                break;
-        }
     }
 }

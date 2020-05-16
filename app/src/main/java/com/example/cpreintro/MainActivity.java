@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         final Spinner pointname = findViewById(R.id.point_name);
         final EditText lat = findViewById(R.id.latitude);
         final EditText lon = findViewById(R.id.longitude);
+
+        //point name dropdown
         List<String> pointnamelist = new ArrayList<>();
         pointnamelist.add(0, "Select a Point name from the List");
         pointnamelist.add("dead_point");
@@ -58,7 +60,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                if (parent.getItemAtPosition(position).equals("Select a Point name from the List")){}
+                if (parent.getItemAtPosition(position).equals("Select a Point name from the List"))
+                {
+                    locationidstr = "";
+                }
                 else
                 {
                     locationidstr = parent.getItemAtPosition(position).toString();
@@ -190,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("observer", observerstr);
 
         //date transfer
-        if(datetxt.getText().equals("")){}
+        if(datetxt.getText() == null){}
         else
         {
             datestr = datetxt.getText().toString();
@@ -223,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //location id tranfer
+        locationidstr = locationidstr.trim();
         if(locationidstr == null || locationidstr.equals("Select a Point name from the List"))
         {
             locationidstr = "";
