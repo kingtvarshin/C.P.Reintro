@@ -5,122 +5,142 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <LinearLayout
-        android:id="@+id/laydate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="20dp"
-        android:layout_margin="20dp"
-        android:orientation="vertical">
+        android:id="@+id/laydate"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/unedittxtview"
-            android:text="@string/date"
-            />
-        <EditText
-            android:id="@+id/datetxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/datetxt"
-            android:padding="15dp"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="datetime"
-            />
-        <EditText
-            android:id="@+id/fix_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/fix_no"
-            android:padding="15dp"
-            android:digits="1234"
-            android:inputType="number"
-            android:maxLength="1"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            />
+            android:padding="20dp"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/unedittxtview"
+                android:text="@string/date"
+                />
+            <EditText
+                android:id="@+id/datetxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/datetxt"
+                android:padding="15dp"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="datetime"
+                />
+            <EditText
+                android:id="@+id/fix_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/fix_no"
+                android:padding="15dp"
+                android:digits="1234"
+                android:inputType="number"
+                android:maxLength="1"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                />
+            <EditText
+                android:id="@+id/commnets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Comments"
+                android:padding="15dp"
+                android:inputType="textMultiLine"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                />
 
-    <LinearLayout
-        android:id="@+id/layobserver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:layout_margin="20dp">
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/layobserver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/unedittxtview"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textAlignment="center"
-            android:text="@string/observer"
-            />
-        <CheckBox
-            android:id="@+id/user1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/user1"
-            android:onClick="onSelectedob"
-            />
-        <CheckBox
-            android:id="@+id/user2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user1"
-            android:text="@string/user2"
-            android:onClick="onSelectedob"
-            />
-        <CheckBox
-            android:id="@+id/user3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user2"
-            android:text="@string/user3"
-            android:onClick="onSelectedob"
-            />
-        <EditText
-            android:id="@+id/ob1txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="observer 1"
-            android:textSize="14sp"
-            android:textAlignment="center"
-            android:padding="5dp"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            />
-        <EditText
-            android:id="@+id/ob2txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="observer2"
-            android:textSize="14sp"
-            android:textAlignment="center"
-            android:padding="5dp"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            />
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/unedittxtview"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textAlignment="center"
+                android:text="@string/observer"
+                />
+            <CheckBox
+                android:id="@+id/user1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/user1"
+                android:onClick="onSelectedob"
+                />
+            <CheckBox
+                android:id="@+id/user2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user1"
+                android:text="@string/user2"
+                android:onClick="onSelectedob"
+                />
+            <CheckBox
+                android:id="@+id/user3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user2"
+                android:text="@string/user3"
+                android:onClick="onSelectedob"
+                />
+            <EditText
+                android:id="@+id/ob1txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="observer 1"
+                android:textSize="14sp"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                />
+            <EditText
+                android:id="@+id/ob2txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="observer2"
+                android:textSize="14sp"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -128,20 +148,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layobserver"
-        android:padding="20dp"
-        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/laydate"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
-        <ToggleButton
-            android:id="@+id/point_or_coord"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textOff="@string/point_name"
-            android:textOn="@string/coordinates"
-            android:layout_gravity="center"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <ToggleButton
+                android:id="@+id/point_or_coord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textOff="@string/point_name"
+                android:textOn="@string/coordinates"
+                android:layout_gravity="center"
+                />
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/switchlatlong"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -152,14 +184,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:spinnerMode="dropdown"
-                android:padding="12dp"
+                android:textSize="12sp"
+                android:padding="10dp"
                 />
             <EditText
                 android:id="@+id/latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/lat"
-                android:padding="12dp"
+                android:padding="10dp"
+                android:textSize="15sp"
                 android:inputType="numberDecimal"
                 android:imeOptions="actionDone"
                 android:layout_gravity="center"
@@ -169,13 +203,90 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/longitude"
-                android:padding="12dp"
+                android:padding="10dp"
+                android:textSize="15sp"
                 android:inputType="numberDecimal"
                 android:imeOptions="actionDone"
                 android:layout_gravity="center"
                 />
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start">
 
+                <EditText
+                    android:id="@+id/latitudedegree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/latdeg"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:padding="10dp"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/latitudemin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/latmin"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    />
+                <EditText
+                    android:id="@+id/latitudesec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/latsec"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start">
+                <EditText
+                    android:id="@+id/longitudedegree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/longdeg"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:layout_gravity="center"
+                    />
+                <EditText
+                    android:id="@+id/longitudemin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/longmin"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:layout_gravity="center"
+                    />
+                <EditText
+                    android:id="@+id/longitudesec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/longsec"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <ScrollView
@@ -186,10 +297,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:padding="20dp"
-            android:layout_margin="20dp"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:layout_margin="15dp"
             android:orientation="vertical">
 
             <Button

@@ -1,23 +1,19 @@
 package com.example.cpreintro;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -26,11 +22,12 @@ import static java.util.Calendar.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText datetxt, lattxt, longtxt, fixnotxt, obs1, obs2;
-
-    String observerstr, datestr, latstr, longstr, fixnostr, locationidstr;
-
+    EditText datetxt, lattxt, longtxt, fixnotxt, obs1, obs2, lat, lon, latdeg, latmin, latsec, longdeg, longmin, longsec, comment;
+    String observerstr, datestr, latstr, longstr, fixnostr, locationidstr, commentstr;
     String temp = null;
+    Switch latlongunit;
+    Spinner pointname;
+    ToggleButton toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,10 +39,17 @@ public class MainActivity extends AppCompatActivity {
         refreshdate();
 
         //point name or coordinates
-        final ToggleButton toggle = (ToggleButton) findViewById(R.id.point_or_coord);
-        final Spinner pointname = findViewById(R.id.point_name);
-        final EditText lat = findViewById(R.id.latitude);
-        final EditText lon = findViewById(R.id.longitude);
+        toggle = findViewById(R.id.point_or_coord);
+        latlongunit = findViewById(R.id.switchlatlong);
+        pointname = findViewById(R.id.point_name);
+        lat = findViewById(R.id.latitude);
+        lon = findViewById(R.id.longitude);
+        latdeg = findViewById(R.id.latitudedegree);
+        latmin = findViewById(R.id.latitudemin);
+        latsec = findViewById(R.id.latitudesec);
+        longdeg = findViewById(R.id.longitudedegree);
+        longmin = findViewById(R.id.longitudemin);
+        longsec = findViewById(R.id.longitudesec);
 
         //point name dropdown
         List<String> pointnamelist = new ArrayList<>();
@@ -67,15 +71,24 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     locationidstr = parent.getItemAtPosition(position).toString();
-                    Toast.makeText(parent.getContext(),"Selected: " +locationidstr, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
+
+        //initial visibility
         lat.setVisibility(View.GONE);
         lon.setVisibility(View.GONE);
+        latdeg.setVisibility(View.GONE);
+        latmin.setVisibility(View.GONE);
+        latsec.setVisibility(View.GONE);
+        longdeg.setVisibility(View.GONE);
+        longmin.setVisibility(View.GONE);
+        longsec.setVisibility(View.GONE);
+        latlongunit.setVisibility(View.GONE);
         pointname.setVisibility(View.VISIBLE);
+
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -84,14 +97,66 @@ public class MainActivity extends AppCompatActivity {
                     pointname.setSelection(0);
                     lat.setVisibility(View.VISIBLE);
                     lon.setVisibility(View.VISIBLE);
+                    latlongunit.setVisibility(View.VISIBLE);
+                    latlongunit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            if(b)
+                            {
+                                lat.setText("");
+                                lon.setText("");
+                                lat.setVisibility(View.GONE);
+                                lon.setVisibility(View.GONE);
+                                latdeg.setVisibility(View.VISIBLE);
+                                latmin.setVisibility(View.VISIBLE);
+                                latsec.setVisibility(View.VISIBLE);
+                                longdeg.setVisibility(View.VISIBLE);
+                                longmin.setVisibility(View.VISIBLE);
+                                longsec.setVisibility(View.VISIBLE);
+
+                            }
+                            else
+                            {
+                                latdeg.setText("");
+                                latmin.setText("");
+                                latsec.setText("");
+                                longdeg.setText("");
+                                longmin.setText("");
+                                longsec.setText("");
+                                lat.setVisibility(View.VISIBLE);
+                                lon.setVisibility(View.VISIBLE);
+                                latdeg.setVisibility(View.GONE);
+                                latmin.setVisibility(View.GONE);
+                                latsec.setVisibility(View.GONE);
+                                longdeg.setVisibility(View.GONE);
+                                longmin.setVisibility(View.GONE);
+                                longsec.setVisibility(View.GONE);
+                            }
+                        }
+                    });
                     pointname.setVisibility(View.GONE);
                 }
                 else
-                {   lat.setText("");
+                {
+                    latlongunit.setChecked(false);
+                    latdeg.setText("");
+                    latmin.setText("");
+                    latsec.setText("");
+                    longdeg.setText("");
+                    longmin.setText("");
+                    longsec.setText("");
+                    lat.setText("");
                     lon.setText("");
                     lat.setVisibility(View.GONE);
                     lon.setVisibility(View.GONE);
+                    latdeg.setVisibility(View.GONE);
+                    latmin.setVisibility(View.GONE);
+                    latsec.setVisibility(View.GONE);
+                    longdeg.setVisibility(View.GONE);
+                    longmin.setVisibility(View.GONE);
+                    longsec.setVisibility(View.GONE);
                     pointname.setVisibility(View.VISIBLE);
+                    latlongunit.setVisibility(View.GONE);
                 }
             }
         });
@@ -123,6 +188,13 @@ public class MainActivity extends AppCompatActivity {
         lattxt = findViewById(R.id.latitude);
         longtxt = findViewById(R.id.longitude);
         fixnotxt = findViewById(R.id.fix_no);
+        latdeg = findViewById(R.id.latitudedegree);
+        latmin = findViewById(R.id.latitudemin);
+        latsec = findViewById(R.id.latitudesec);
+        longdeg = findViewById(R.id.longitudedegree);
+        longmin = findViewById(R.id.longitudemin);
+        longsec = findViewById(R.id.longitudesec);
+        comment = findViewById(R.id.commnets);
 
         //empty field check
         if(observerstr != null)
@@ -136,33 +208,13 @@ public class MainActivity extends AppCompatActivity {
             return ;
         }
 
-        BirdDialog birdialog = new BirdDialog();
+        Intent intent = new Intent(this, BirdActivity.class);
 
-        //bundle to send values from activity to dialog
-        Bundle bundle = new Bundle();
-        switch(view.getId())
-        {
-            case R.id.bird00:
-                bundle.putString("title", "bird : 00");
-                break;
-            case R.id.bird25:
-                bundle.putString("title", "bird : 25");
-                break;
-            case R.id.bird40:
-                bundle.putString("title", "bird : 40");
-                break;
-            case R.id.bird45:
-                bundle.putString("title", "bird : 45");
-                break;
-        }
-
-        // observer transfer
+        //observer string passed
         String editobserver = observeredittextstr();
         if(observerstr == null)
         {
-            if(editobserver == null){}
-            else
-            {
+            if (editobserver != null) {
                 observerstr = editobserver;
             }
         }
@@ -179,70 +231,95 @@ public class MainActivity extends AppCompatActivity {
                     tempword = temp;
                     observerstr = observerstr.replaceAll(tempword,"");
                 }
-                else{}
             }
             else
             {
-                if(observerstr.contains(editobserver))
-                {}
-                else
-                {
+                if (!observerstr.contains(editobserver)) {
                     observerstr = observerstr.concat(" "+editobserver);
                 }
             }
         }
         temp = editobserver;
-        bundle.putString("observer", observerstr);
+        intent.putExtra("observer",observerstr);
 
-        //date transfer
-        if(datetxt.getText() == null){}
-        else
-        {
+        //date string passed
+        if (datetxt.getText() != null) {
             datestr = datetxt.getText().toString();
-            bundle.putString("date", datestr);
+        }
+        intent.putExtra("date",datestr);
+
+        //comment string passed
+        if (comment.getText() != null) {
+            commentstr = comment.getText().toString();
+        }
+        intent.putExtra("comment",commentstr);
+
+        //tag channel string passed
+        switch(view.getId())
+        {
+            case R.id.bird00:
+                intent.putExtra("tag_channel","bird : 00");
+                break;
+            case R.id.bird25:
+                intent.putExtra("tag_channel", "bird : 25");
+                break;
+            case R.id.bird40:
+                intent.putExtra("tag_channel", "bird : 40");
+                break;
+            case R.id.bird45:
+                intent.putExtra("tag_channel", "bird : 45");
+                break;
         }
 
         //lat transfer
-        if(lattxt.getText() == null){}
-        else
-        {
+        if (!lattxt.getText().toString().equals("")) {
             latstr = lattxt.getText().toString();
-            System.out.println("latstr" + lattxt.getText());
-            bundle.putString("lat", latstr);
+            intent.putExtra("latitude",latstr);
+        }
+        else if (!latdeg.getText().toString().equals("")) {
+            String temp = latdeg.getText().toString() + "°" + latmin.getText().toString() + "'" + latsec.getText().toString() + "\"";
+            latstr = temp ;
+            intent.putExtra("latitude",latstr);
+        }
+        else {
+            latstr = "";
         }
 
         //long transfer
-        if(longtxt.getText() == null){}
-        else
-        {
+        if (!longtxt.getText().toString().equals("")) {
             longstr = longtxt.getText().toString();
-            bundle.putString("long", longstr);
+            intent.putExtra("longitude",longstr);
+        }
+        else if (!longdeg.getText().toString().equals("")) {
+            longstr = longdeg.getText().toString() + "°" + longmin.getText().toString() + "'" + longsec.getText().toString() + "\"";
+            intent.putExtra("longitude",longstr);
+        }
+        else {
+            longstr = "";
         }
 
         //fix no transfer
-        if(fixnotxt.getText() == null){}
-        else
-        {
+        if (!fixnotxt.getText().toString().equals("")) {
             fixnostr = fixnotxt.getText().toString();
-            bundle.putString("fixno", fixnostr);
+            intent.putExtra("fix_no",fixnostr);
         }
 
         //location id tranfer
         locationidstr = locationidstr.trim();
-        if(locationidstr == null || locationidstr.equals("Select a Point name from the List"))
+        if(locationidstr.equals("") || locationidstr.equals("Select a Point name from the List"))
         {
             locationidstr = "";
         }
-        bundle.putString("locationid", locationidstr);
+        intent.putExtra("location_id",locationidstr);
 
-        birdialog.setArguments(bundle);
-        birdialog.show(getSupportFragmentManager(),"bird dialog");
+        startActivity(intent);
     }
 
+    //checkboxx observer code
     public void onSelectedob(View view) {
 
-        Boolean checked = ((CheckBox) view).isChecked();
-        Boolean present = false;
+        boolean checked = ((CheckBox) view).isChecked();
+        boolean present = false;
         String obs = ((CheckBox) view).getText().toString();
         if (observerstr != null && observerstr.contains(obs))
         {
@@ -274,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //edittext observer code
     public String observeredittextstr() {
 
         obs1 = findViewById(R.id.ob1txt);
@@ -281,10 +359,7 @@ public class MainActivity extends AppCompatActivity {
         String result = null;
         if(obs1.getText().toString().equals(""))
         {
-            if(obs2.getText().toString().equals(""))
-            {}
-            else
-            {
+            if (!obs2.getText().toString().equals("")) {
                 result = obs2.getText().toString();
             }
         }

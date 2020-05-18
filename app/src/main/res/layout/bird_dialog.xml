@@ -24,6 +24,7 @@
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="time"
+            android:onClick="showTimePickerDialog"
             />
         <EditText
             android:id="@+id/editazbe"
@@ -58,8 +59,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="Strong Signal"/>
+                android:text="Broad Signal"/>
         </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/laytime"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_margin="15dp"
+            android:text="back"/>
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_margin="15dp"
+            android:text="save"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

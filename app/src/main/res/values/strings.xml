@@ -8,11 +8,17 @@
     <string name="observer">observer</string>
     <string name="point_name">point name</string>
     <string name="coordinates">Coordinates</string>
-    <string name="lat">latitude</string>
-    <string name="longitude">longitude</string>
+    <string name="lat">latitude(°)</string>
+    <string name="longitude">longitude(°)</string>
     <string name="submit">Submit</string>
     <string name="datetxt">14/05/2020</string>
     <string name="time">Time</string>
     <string name="azimuth_bearing">Azimuth Bearing</string>
     <string name="gs_script">https://script.google.com/d/MuzBpx9NML4owqmdogkhlMXttkBDo3nev/edit?uiv=2&amp;mid=ACjPJvGZ5D6S-89apGVu9bTaH4vfqab97cfhneEudb0qVQoVm80KnxAR5ju7L9GrqgaCgwtnd9r_wKrwNDtW9TQlMC0s-jACbLP1Zr381HtKnTgRMK2b2dENfVHgS7EBWIw2RESPyYeB7nc</string>
+    <string name="latsec">lat\"</string>
+    <string name="longsec">long\"</string>
+    <string name="longmin">long\'</string>
+    <string name="latmin">lat\'</string>
+    <string name="latdeg">lat°</string>
+    <string name="longdeg">long°</string>
 </resources>
