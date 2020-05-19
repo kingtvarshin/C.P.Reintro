@@ -22,7 +22,7 @@ import static java.util.Calendar.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText datetxt, lattxt, longtxt, fixnotxt, obs1, obs2, lat, lon, latdeg, latmin, latsec, longdeg, longmin, longsec, comment;
+    EditText datetxt, lattxt, longtxt, fixnotxt, obs1, obs2, latdeg, latmin, latsec, longdeg, longmin, longsec, comment;
     String observerstr, datestr, latstr, longstr, fixnostr, locationidstr, commentstr;
     String temp = null;
     Switch latlongunit;
@@ -35,6 +35,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //editfield decelerations
+        datetxt = findViewById(R.id.datetxt);
+        lattxt = findViewById(R.id.latitude);
+        longtxt = findViewById(R.id.longitude);
+        fixnotxt = findViewById(R.id.fix_no);
+        latdeg = findViewById(R.id.latitudedegree);
+        latmin = findViewById(R.id.latitudemin);
+        latsec = findViewById(R.id.latitudesec);
+        longdeg = findViewById(R.id.longitudedegree);
+        longmin = findViewById(R.id.longitudemin);
+        longsec = findViewById(R.id.longitudesec);
+        comment = findViewById(R.id.commnets);
+
         //date
         refreshdate();
 
@@ -42,20 +55,37 @@ public class MainActivity extends AppCompatActivity {
         toggle = findViewById(R.id.point_or_coord);
         latlongunit = findViewById(R.id.switchlatlong);
         pointname = findViewById(R.id.point_name);
-        lat = findViewById(R.id.latitude);
-        lon = findViewById(R.id.longitude);
-        latdeg = findViewById(R.id.latitudedegree);
-        latmin = findViewById(R.id.latitudemin);
-        latsec = findViewById(R.id.latitudesec);
-        longdeg = findViewById(R.id.longitudedegree);
-        longmin = findViewById(R.id.longitudemin);
-        longsec = findViewById(R.id.longitudesec);
+
+        //initial visibility
+        lattxt.setVisibility(View.GONE);
+        longtxt.setVisibility(View.GONE);
+        latdeg.setVisibility(View.GONE);
+        latmin.setVisibility(View.GONE);
+        latsec.setVisibility(View.GONE);
+        longdeg.setVisibility(View.GONE);
+        longmin.setVisibility(View.GONE);
+        longsec.setVisibility(View.GONE);
+        latlongunit.setVisibility(View.GONE);
+        pointname.setVisibility(View.VISIBLE);
 
         //point name dropdown
         List<String> pointnamelist = new ArrayList<>();
         pointnamelist.add(0, "Select a Point name from the List");
+        pointnamelist.add("near_tent");
+        pointnamelist.add("nallah_entrance");
+        pointnamelist.add("v_point_old");
+        pointnamelist.add("toota_pedh");
+        pointnamelist.add("photo");
+        pointnamelist.add("span");
+        pointnamelist.add("pen_point");
+        pointnamelist.add("v_point");
+        pointnamelist.add("opposite_point");
+        pointnamelist.add("new_span");
         pointnamelist.add("dead_point");
         pointnamelist.add("way_point");
+        pointnamelist.add("t40");
+        pointnamelist.add("tikri_dhala");
+        pointnamelist.add("above_tikri_dhala");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, pointnamelist);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         pointname.setAdapter(arrayAdapter);
@@ -71,42 +101,91 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     locationidstr = parent.getItemAtPosition(position).toString();
+                    switch (locationidstr) {
+                        case "near_tent":
+                            latstr = "31.02346";
+                            longstr = "77.28738";
+                            break;
+                        case "nallah_entrance":
+                            latstr = "31.02421";
+                            longstr = "77.28677";
+                            break;
+                        case "v_point_old":
+                            latstr = "31.02484";
+                            longstr = "77.28751";
+                            break;
+                        case "toota_pedh":
+                            latstr = "31.02485";
+                            longstr = "77.29015";
+                            break;
+                        case "photo":
+                            latstr = "31.02286";
+                            longstr = "77.28786";
+                            break;
+                        case "span":
+                            latstr = "31.02273";
+                            longstr = "77.28879";
+                            break;
+                        case "pen_point":
+                            latstr = "31.02401";
+                            longstr = "77.28754";
+                            break;
+                        case "v_point":
+                            latstr = "31.02488";
+                            longstr = "77.28746";
+                            break;
+                        case "opposite_point":
+                            latstr = "31.0238";
+                            longstr = "77.28805";
+                            break;
+                        case "new_span":
+                            latstr = "31.02271";
+                            longstr = "77.28935";
+                            break;
+                        case "dead_pnt":
+                            latstr = "31.0239";
+                            longstr = "77.28906";
+                            break;
+                        case "way_point":
+                            latstr = "31.02291";
+                            longstr = "77.28951";
+                            break;
+                        default:
+                            latstr = "";
+                            longstr = "";
+                            break;
+                    }
+
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        //initial visibility
-        lat.setVisibility(View.GONE);
-        lon.setVisibility(View.GONE);
-        latdeg.setVisibility(View.GONE);
-        latmin.setVisibility(View.GONE);
-        latsec.setVisibility(View.GONE);
-        longdeg.setVisibility(View.GONE);
-        longmin.setVisibility(View.GONE);
-        longsec.setVisibility(View.GONE);
-        latlongunit.setVisibility(View.GONE);
-        pointname.setVisibility(View.VISIBLE);
-
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
                 if (b)
                 {
+                    locationidstr = "";
+                    latstr = "";
+                    longstr = "";
                     pointname.setSelection(0);
-                    lat.setVisibility(View.VISIBLE);
-                    lon.setVisibility(View.VISIBLE);
+                    lattxt.setVisibility(View.VISIBLE);
+                    longtxt.setVisibility(View.VISIBLE);
                     latlongunit.setVisibility(View.VISIBLE);
                     latlongunit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                             if(b)
                             {
-                                lat.setText("");
-                                lon.setText("");
-                                lat.setVisibility(View.GONE);
-                                lon.setVisibility(View.GONE);
+                                latstr = "";
+                                longstr = "";
+                                lattxt.setText("");
+                                longtxt.setText("");
+                                lattxt.setVisibility(View.GONE);
+                                longtxt.setVisibility(View.GONE);
                                 latdeg.setVisibility(View.VISIBLE);
                                 latmin.setVisibility(View.VISIBLE);
                                 latsec.setVisibility(View.VISIBLE);
@@ -117,14 +196,16 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else
                             {
+                                latstr = "";
+                                longstr = "";
                                 latdeg.setText("");
                                 latmin.setText("");
                                 latsec.setText("");
                                 longdeg.setText("");
                                 longmin.setText("");
                                 longsec.setText("");
-                                lat.setVisibility(View.VISIBLE);
-                                lon.setVisibility(View.VISIBLE);
+                                lattxt.setVisibility(View.VISIBLE);
+                                longtxt.setVisibility(View.VISIBLE);
                                 latdeg.setVisibility(View.GONE);
                                 latmin.setVisibility(View.GONE);
                                 latsec.setVisibility(View.GONE);
@@ -138,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    latstr = "";
+                    longstr = "";
                     latlongunit.setChecked(false);
                     latdeg.setText("");
                     latmin.setText("");
@@ -145,10 +228,10 @@ public class MainActivity extends AppCompatActivity {
                     longdeg.setText("");
                     longmin.setText("");
                     longsec.setText("");
-                    lat.setText("");
-                    lon.setText("");
-                    lat.setVisibility(View.GONE);
-                    lon.setVisibility(View.GONE);
+                    lattxt.setText("");
+                    longtxt.setText("");
+                    lattxt.setVisibility(View.GONE);
+                    longtxt.setVisibility(View.GONE);
                     latdeg.setVisibility(View.GONE);
                     latmin.setVisibility(View.GONE);
                     latsec.setVisibility(View.GONE);
@@ -174,87 +257,114 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
     }
 
+    //date set in field
     public void refreshdate() {
         Calendar cal = getInstance();
         datetxt = findViewById(R.id.datetxt);
-        datetxt.setText(cal.get(DATE)+"/"+cal.get(MONTH)+"/"+cal.get(YEAR));
+        String date = cal.get(DATE)+"/"+cal.get(MONTH)+"/"+cal.get(YEAR);
+        datetxt.setText(date);
     }
 
     //bird dialog onclick
     public void birddialog(View view) {
 
-        //editfield decelerations
-        datetxt = findViewById(R.id.datetxt);
-        lattxt = findViewById(R.id.latitude);
-        longtxt = findViewById(R.id.longitude);
-        fixnotxt = findViewById(R.id.fix_no);
-        latdeg = findViewById(R.id.latitudedegree);
-        latmin = findViewById(R.id.latitudemin);
-        latsec = findViewById(R.id.latitudesec);
-        longdeg = findViewById(R.id.longitudedegree);
-        longmin = findViewById(R.id.longitudemin);
-        longsec = findViewById(R.id.longitudesec);
-        comment = findViewById(R.id.commnets);
+        //observer string
+        {
+            String editobserver = observeredittextstr();
+            if (observerstr == null) {
+                if (editobserver != null) {
+                    observerstr = editobserver;
+                }
+            } else {
+                if (editobserver == null) {
+                    if (temp != null && observerstr.contains(temp)) {
+                        String tempword = temp + " ";
+                        observerstr = observerstr.replaceAll(tempword, "");
+                        tempword = " " + temp;
+                        observerstr = observerstr.replaceAll(tempword, "");
+                        tempword = temp;
+                        observerstr = observerstr.replaceAll(tempword, "");
+                    }
+                } else {
+                    if (!observerstr.contains(editobserver)) {
+                        observerstr = observerstr.concat(" " + editobserver);
+                    }
+                }
+            }
+            temp = editobserver;
+        }
+        //date string
+        {
+            if (datetxt.getText() != null) {
+                datestr = datetxt.getText().toString();
+            }
+        }
+        //comment string
+        {
+            if (!comment.getText().toString().equals("")) {
+                commentstr = comment.getText().toString();
+            } else {
+                commentstr = "";
+            }
+        }
+        //location id
+        {
+            locationidstr = locationidstr.trim();
+            if (locationidstr.equals("") || locationidstr.equals("Select a Point name from the List")) {
+                locationidstr = "";
+            }
+        }
+        //lat
+        {
+            if (!lattxt.getText().toString().equals("") && locationidstr.equals("")) {
+                latstr = lattxt.getText().toString();
+            } else if (!latdeg.getText().toString().equals("") && locationidstr.equals("")) {
+                latstr = latdeg.getText().toString() + "° 0" + latmin.getText().toString() + "' 0" + latsec.getText().toString() + "\"";
+            } else if (locationidstr.equals("")) {
+                latstr = "";
+            }
+        }
+        //long
+        {
+            if (!longtxt.getText().toString().equals("") && locationidstr.equals("")) {
+                longstr = longtxt.getText().toString();
+            } else if (!longdeg.getText().toString().equals("") && locationidstr.equals("")) {
+                longstr = longdeg.getText().toString() + "° 0" + longmin.getText().toString() + "' 0" + longsec.getText().toString() + "\"";
+            } else if (locationidstr.equals("")) {
+                longstr = "";
+            }
+        }
+        //fix no
+        {
+            if (!fixnotxt.getText().toString().equals("")) {
+                fixnostr = fixnotxt.getText().toString();
+            }
+        }
 
         //empty field check
         if(observerstr != null)
             observerstr = observerstr.trim();
         if(datetxt.getText().toString().equals("")
                 || fixnotxt.getText().toString().equals("")
-                || observerstr == null
                 || observerstr.equals(""))
         {
             Toast.makeText(view.getContext(),"please fill the empty fields", Toast.LENGTH_SHORT).show();
             return ;
         }
+        if(locationidstr.equals("") && latstr.equals("") && longstr.equals(""))
+        {
+            Toast.makeText(view.getContext(),"please fill location requirements", Toast.LENGTH_SHORT).show();
+            return ;
+        }
 
         Intent intent = new Intent(this, BirdActivity.class);
-
-        //observer string passed
-        String editobserver = observeredittextstr();
-        if(observerstr == null)
-        {
-            if (editobserver != null) {
-                observerstr = editobserver;
-            }
-        }
-        else
-        {
-            if(editobserver == null)
-            {
-                if(temp != null && observerstr.contains(temp))
-                {
-                    String tempword = temp + " ";
-                    observerstr = observerstr.replaceAll(tempword,"");
-                    tempword = " " + temp;
-                    observerstr = observerstr.replaceAll(tempword,"");
-                    tempword = temp;
-                    observerstr = observerstr.replaceAll(tempword,"");
-                }
-            }
-            else
-            {
-                if (!observerstr.contains(editobserver)) {
-                    observerstr = observerstr.concat(" "+editobserver);
-                }
-            }
-        }
-        temp = editobserver;
         intent.putExtra("observer",observerstr);
-
-        //date string passed
-        if (datetxt.getText() != null) {
-            datestr = datetxt.getText().toString();
-        }
         intent.putExtra("date",datestr);
-
-        //comment string passed
-        if (comment.getText() != null) {
-            commentstr = comment.getText().toString();
-        }
         intent.putExtra("comment",commentstr);
-
-        //tag channel string passed
+        intent.putExtra("latitude", latstr);
+        intent.putExtra("longitude", longstr);
+        intent.putExtra("fix_no", fixnostr);
+        //tag channel string
         switch(view.getId())
         {
             case R.id.bird00:
@@ -269,46 +379,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.bird45:
                 intent.putExtra("tag_channel", "bird : 45");
                 break;
-        }
-
-        //lat transfer
-        if (!lattxt.getText().toString().equals("")) {
-            latstr = lattxt.getText().toString();
-            intent.putExtra("latitude",latstr);
-        }
-        else if (!latdeg.getText().toString().equals("")) {
-            String temp = latdeg.getText().toString() + "°" + latmin.getText().toString() + "'" + latsec.getText().toString() + "\"";
-            latstr = temp ;
-            intent.putExtra("latitude",latstr);
-        }
-        else {
-            latstr = "";
-        }
-
-        //long transfer
-        if (!longtxt.getText().toString().equals("")) {
-            longstr = longtxt.getText().toString();
-            intent.putExtra("longitude",longstr);
-        }
-        else if (!longdeg.getText().toString().equals("")) {
-            longstr = longdeg.getText().toString() + "°" + longmin.getText().toString() + "'" + longsec.getText().toString() + "\"";
-            intent.putExtra("longitude",longstr);
-        }
-        else {
-            longstr = "";
-        }
-
-        //fix no transfer
-        if (!fixnotxt.getText().toString().equals("")) {
-            fixnostr = fixnotxt.getText().toString();
-            intent.putExtra("fix_no",fixnostr);
-        }
-
-        //location id tranfer
-        locationidstr = locationidstr.trim();
-        if(locationidstr.equals("") || locationidstr.equals("Select a Point name from the List"))
-        {
-            locationidstr = "";
         }
         intent.putExtra("location_id",locationidstr);
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,9 +38,6 @@ public class BirdActivity extends AppCompatActivity {
 
         final EditText time = findViewById(R.id.edittime);
         final EditText azimuthbe = findViewById(R.id.editazbe);
-        final RadioButton rdnd = findViewById(R.id.radiond);
-        final RadioButton rdws = findViewById(R.id.radiows);
-        final RadioButton rdss = findViewById(R.id.radioss);
         save = findViewById(R.id.save);
         back = findViewById(R.id.back);
 
@@ -65,22 +63,37 @@ public class BirdActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(rdnd.isChecked())
-                    signalstr = rdnd.getText().toString();
-                else if(rdws.isChecked())
-                    signalstr = rdws.getText().toString();
-                else if(rdss.isChecked())
-                    signalstr = rdss.getText().toString();
-
-                //check for null
-                if(latstr == null)
-                    latstr = "";
-                else if(longstr == null)
-                    longstr = "";
-                else if(timestr == null)
-                    timestr = "";
                 timestr = time.getText().toString();
                 azimuthstr = azimuthbe.getText().toString();
+
+                //null check
+                if(timestr.equals("")) {
+                    Toast.makeText(BirdActivity.this, "please enter the time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(azimuthstr.equals(("")))
+                {
+                    Toast.makeText(BirdActivity.this, "please enter the azimuth bearing", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(signalstr.equals(""))
+                {
+                    Toast.makeText(BirdActivity.this, "please select the signal strength", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                System.out.println("observer: " + observerstr +
+                                "date: " + datestr +
+                                "tagchannel: " + title +
+                                "time: " + timestr +
+                                "lat: " + latstr +
+                                "long: " + longstr +
+                                "azimuthbearing: " + azimuthstr +
+                                "fixno: " + fixnostr +
+                                "locationid: " + locationidstr +
+                                "signaltype: " + signalstr +
+                                "comments: " + commentstr);
+
                 addItemToSheet();
             }
         });
@@ -141,6 +154,21 @@ public class BirdActivity extends AppCompatActivity {
 
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
+
+    }
+
+    public void signalselect(View view) {
+
+        RadioButton rdnd = findViewById(R.id.radiond);
+        RadioButton rdws = findViewById(R.id.radiows);
+        RadioButton rdss = findViewById(R.id.radioss);
+
+        if(rdnd.isChecked())
+            signalstr = rdnd.getText().toString();
+        else if(rdws.isChecked())
+            signalstr = rdws.getText().toString();
+        else if(rdss.isChecked())
+            signalstr = rdss.getText().toString();
 
     }
 }

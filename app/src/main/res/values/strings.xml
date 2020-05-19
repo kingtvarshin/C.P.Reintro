@@ -21,4 +21,9 @@
     <string name="latmin">lat\'</string>
     <string name="latdeg">lat°</string>
     <string name="longdeg">long°</string>
+    <string name="not_detected">Not Detected</string>
+    <string name="weak_signal">Weak Signal</string>
+    <string name="broad_signal">Broad Signal</string>
+    <string name="observer_1">observer 1</string>
+    <string name="observer2">observer2</string>
 </resources>
